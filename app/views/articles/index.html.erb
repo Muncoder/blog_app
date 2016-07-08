@@ -6,8 +6,10 @@
 				<h1><%= article.title %></h1>
 			<% end %>
 		<p><%= truncate(article.body, length: 200) %></p>
+
 	</div>
 <% end %>
 
-
-<%= link_to "New Article", new_article_path %>
+<% if user_signed_in? %>
+	<%= link_to "New Article", new_article_path %>
+<% end %>

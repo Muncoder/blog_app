@@ -1,4 +1,5 @@
 class ArticlesController < ApplicationController
+	before_action :authenticate_user!, except: [:index, :show]
 	before_action :set_article, except: [:index, :new, :create]
 
 	def index
@@ -10,10 +11,11 @@ class ArticlesController < ApplicationController
 	end
 
 	def create
+		@article.user_id = current_user
 		@article = Article.new(article_params)
 
 		if @article.save
-			flash.now[:success] = "Article has been created"
+			flash[:success] = "Article has been created"
 			redirect_to articles_path
 		else
 			flash.now[:danger] = "Article has not been created"
@@ -22,13 +24,33 @@ class ArticlesController < ApplicationController
 	end
 
 	def show
-		
 	end
+
+	def edit
+	end
+
+	def update
+		@article.user_id = current_user
+		if @article.update(article_params)
+			flash[:success] = "Article has been updated successfully"
+			redirect_to @article
+		else
+			flash.now[:danger] = "Article has not been updated"
+			render :edit
+		end
+	end
+
+	def destroy
+		@article.destroy
+		flash[:success] = "Deleted successfully!"
+		redirect_to root_path
+	end
+
 
 	private
 
 	def article_params
-		params.require(:article).permit(:title, :body)
+		params.require(:article).permit(:title, :body, :user_id)
 	end
 
 	def set_article

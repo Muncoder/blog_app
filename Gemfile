@@ -11,6 +11,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'bootstrap-sass', '~> 3.3', '>= 3.3.6'
+gem 'devise', '~> 4.2'
 
 
 group :development, :test do

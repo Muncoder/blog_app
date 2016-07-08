@@ -1,8 +1,8 @@
 class ArticlesController < ApplicationController
 	before_action :set_article, except: [:index, :new, :create]
 
-
 	def index
+		@articles = Article.all.order("created_at DESC")
 	end
 
 	def new
@@ -13,10 +13,10 @@ class ArticlesController < ApplicationController
 		@article = Article.new(article_params)
 
 		if @article.save
-			flash[:success] = "Article has been created"
+			flash.now[:success] = "Article has been created"
 			redirect_to articles_path
 		else
-			flash[:danger] = "Article has not been created"
+			flash.now[:danger] = "Article has not been created"
 			render :new
 		end
 	end
